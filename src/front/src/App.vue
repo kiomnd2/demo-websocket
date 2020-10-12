@@ -1,16 +1,20 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import websocket from './websocket/ws.js';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  created() {
+      websocket.onopen = function(message) {
+        console.log("connected !! ", message);
+      };
   }
+
 }
 </script>
 
