@@ -12,6 +12,7 @@ public class HttpHandler extends SimpleChannelInboundHandler<FullHttpMessage> {
         ConnectionManager con = ConnectionManager.getInstance();
 
         HttpRequest request = null;
+        System.out.println("????");
 
         // HttpRequest 일 때
         if (fullHttpMessage instanceof HttpRequest) {
