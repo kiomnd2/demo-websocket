@@ -11,6 +11,18 @@
           </div>
         </md-app-content>
       </md-app>
+      <div style="padding: 15px">
+        <md-field>
+          <label>Text</label>
+          <md-input :disabled="connected" v-model="message" @keyup.enter.prevent="sendMessage"></md-input>
+        </md-field>
+      </div>
+      <md-speed-dial class="md-bottom-right">
+        <md-speed-dial-target>
+          <md-icon>add</md-icon>
+        </md-speed-dial-target>
+        <md-tooltip :md-active.sync="active">{{ receiveMessage }}</md-tooltip>
+      </md-speed-dial>
     </div>
 </template>
 
@@ -20,17 +32,23 @@ export default {
   data () {
     return {
       state: 'md-default',
-      connected: false
+      ws: null,
+      connected: false,
+      message: '',
+      receiveMessage: '',
+      active: false,
+      delay: 1000
     }
   },
   methods: {
     init () {
-      const ws = new WebSocket('ws://localhost:9999/websocket')
-      this.onOpen(ws)
-      this.onClose(ws)
+      this.ws = new WebSocket('ws://localhost:9999/websocket')
+      this.onOpen()
+      this.onClose()
+      this.onMessage()
     },
     onOpen (ws) {
-      ws.onopen = (message) => {
+      this.ws.onopen = (message) => {
         clearTimeout(this.reconnecting())
         console.log('connected!!')
         this.state = 'md-primary'
@@ -39,7 +57,7 @@ export default {
       }
     },
     onClose (ws) {
-      ws.onclose = (message) => {
+      this.ws.onclose = (message) => {
         console.log('closed')
         this.reconnecting()
         this.state = 'md-default'
@@ -47,13 +65,24 @@ export default {
         this.connected = true
       }
     },
+    onMessage (ws) {
+      this.ws.onmessage = (dat) => {
+        console.log('receive: ', dat.data)
+        this.active = true
+        this.receiveMessage = dat.data
+      }
+    },
     reconnecting () {
       return setTimeout(() => {
         console.log('연결을 재시도 합니다')
         this.init()
       }, 5000)
-    }cd
-    ls
+    },
+    sendMessage () {
+      console.log('send: ', this.message)
+      this.ws.send(this.message)
+      this.message = ''
+    }
   },
   created () {
     this.init()
