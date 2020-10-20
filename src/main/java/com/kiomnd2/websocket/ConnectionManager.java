@@ -1,6 +1,8 @@
 package com.kiomnd2.websocket;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.mqtt.MqttMessageBuilders;
@@ -27,7 +29,7 @@ public class ConnectionManager {
         map.putIfAbsent(ctx.channel().remoteAddress().toString(), ctx);
     }
 
-    public void pushingMessage(String message) {
+    public void pushingMessage(final String message) {
         this.map.forEach( (k,v) -> {
             // 웹소캣으로 보낼거다
             WebSocketFrame webSocketFrame = new TextWebSocketFrame(message);

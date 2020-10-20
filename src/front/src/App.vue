@@ -17,12 +17,11 @@
           <md-input :disabled="connected" v-model="message" @keyup.enter.prevent="sendMessage"></md-input>
         </md-field>
       </div>
-      <md-speed-dial class="md-bottom-right">
-        <md-speed-dial-target>
-          <md-icon>add</md-icon>
-        </md-speed-dial-target>
-        <md-tooltip :md-active.sync="active">{{ receiveMessage }}</md-tooltip>
-      </md-speed-dial>
+      <div>
+        <md-dialog-alert
+          :md-active.sync="active"
+          :md-content="receiveMessage" />
+      </div>
     </div>
 </template>
 
@@ -47,7 +46,7 @@ export default {
       this.onClose()
       this.onMessage()
     },
-    onOpen (ws) {
+    onOpen () {
       this.ws.onopen = (message) => {
         clearTimeout(this.reconnecting())
         console.log('connected!!')
@@ -56,7 +55,7 @@ export default {
         this.connected = false
       }
     },
-    onClose (ws) {
+    onClose () {
       this.ws.onclose = (message) => {
         console.log('closed')
         this.reconnecting()
@@ -65,7 +64,7 @@ export default {
         this.connected = true
       }
     },
-    onMessage (ws) {
+    onMessage () {
       this.ws.onmessage = (dat) => {
         console.log('receive: ', dat.data)
         this.active = true

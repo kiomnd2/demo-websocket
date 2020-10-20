@@ -23,6 +23,8 @@ public class WebsocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("connected by " + ctx.channel().remoteAddress());
         ConnectionManager instance = ConnectionManager.getInstance();
+
+
         instance.addContext(ctx);
 
         // 현재 사용자

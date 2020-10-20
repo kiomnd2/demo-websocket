@@ -8,11 +8,19 @@
     <artifactId>WebSocket</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <java.version>11</java.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.52.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.0</version>
         </dependency>
     </dependencies>
 </project>
