@@ -8,10 +8,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import org.omg.PortableServer.POA;
 
 public class WebSocket {
-    private static final int PORT = 8080;
+    private static final int PORT = 9999;
 
     public static void main(String[] args) throws InterruptedException {
 
