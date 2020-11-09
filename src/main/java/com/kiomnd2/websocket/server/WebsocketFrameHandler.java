@@ -1,4 +1,4 @@
-package com.kiomnd2.websocket;
+package com.kiomnd2.websocket.server;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -12,6 +12,7 @@ public class WebsocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
     protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame frame) throws Exception {
         if (frame instanceof TextWebSocketFrame) {
             String request = ((TextWebSocketFrame)frame).text();
+            System.out.println("request :: " + request);
             ctx.channel().writeAndFlush(new TextWebSocketFrame(request));
         } else {
             String message = "unsupported frame type: " + frame.getClass().getName();
@@ -39,5 +40,11 @@ public class WebsocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
 
         // 현재 사용자
         System.out.println("curUser : "+instance.getConnectedUser());
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        super.exceptionCaught(ctx, cause);
+        ctx.close();
     }
 }

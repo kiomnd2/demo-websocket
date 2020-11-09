@@ -1,11 +1,8 @@
-package com.kiomnd2.websocket;
+package com.kiomnd2.websocket.server;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
-import io.netty.handler.codec.mqtt.MqttMessageBuilders;
 
 import java.util.concurrent.ConcurrentHashMap;
 
