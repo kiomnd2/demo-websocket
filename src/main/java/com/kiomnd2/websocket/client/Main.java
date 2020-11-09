@@ -59,7 +59,6 @@ public class Main {
                 String msg = reader.readLine();
                 TextWebSocketFrame textWebSocketFrame = new TextWebSocketFrame(msg);
                 channel.writeAndFlush(textWebSocketFrame);
-                System.out.println(msg);
             }
 
         } catch (InterruptedException | IOException e) {
